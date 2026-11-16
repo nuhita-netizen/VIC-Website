@@ -1,6 +1,6 @@
 # VIC Overseas website
 
-A responsive React + Vite + Tailwind CSS starter implementation for VIC Overseas, a study abroad consultancy based in Secunderabad, Telangana.
+A responsive, SEO-ready website for VIC Overseas, a study abroad consultancy based in Secunderabad, Telangana, India.
 
 ## Included
 - Home page with hero, factual service/destination counts, services, destination cards, 8-stage journey, testimonial placeholder, event placeholder, office location details and lead form
