@@ -30,3 +30,6 @@ Thumbs.db
 
 # Local environment template
 .env.example
+
+# Stitch / local config
+.stitch_config

@@ -5,495 +5,529 @@ import {
   GraduationCap,
   Globe2,
   ShieldCheck,
+  Compass,
+  FileCheck2,
+  BookOpenCheck,
+  CheckCircle2,
   Sparkles,
-  CalendarDays,
-  MapPin,
-  Phone,
-  ChevronRight,
-  Mail
+  MapPin
 } from 'lucide-react'
 import { FaWhatsapp } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
-import SectionHeading from '../components/SectionHeading'
-import LeadForm from '../components/LeadForm'
-import Testimonials from '../components/Testimonials'
+import FAQAccordion from '../components/FAQAccordion'
+import CountryModal from '../components/CountryModal'
 import GoogleReviews from '../components/GoogleReviews'
-import MarqueeTicker from '../components/MarqueeTicker'
-import JourneySection from '../components/JourneySection'
-import { countries, services } from '../data'
-import { social, whatsappUrl } from '../config/social'
+import LeadForm from '../components/LeadForm'
+import { destinations } from '../data/destinations'
+import { homeHowItWorks, homeFaqs } from '../data/servicesData'
+import { whatsappUrl } from '../config/social'
+import { officeContact } from '../data/contact'
 
-const headlineWords = ['Your', 'Global', 'Education', 'Journey']
+const topServices = [
+  {
+    icon: Compass,
+    title: 'Career & Course Counselling',
+    desc: 'Align your personal strengths, academic background, and budget with high-growth global disciplines.',
+    anchor: '/services#counselling'
+  },
+  {
+    icon: GraduationCap,
+    title: 'University Shortlisting',
+    desc: 'Data-driven curation categorised into Ambitious, Moderate, and Safe target tiers for optimal success.',
+    anchor: '/services#university-shortlisting'
+  },
+  {
+    icon: FileCheck2,
+    title: 'Application & SOP Assistance',
+    desc: 'Professional storycrafting for SOPs, LOR reviews, and end-to-end deadline and document tracking.',
+    anchor: '/services#application-assistance'
+  },
+  {
+    icon: BookOpenCheck,
+    title: 'Standardised Test Prep',
+    desc: 'Comprehensive diagnostic coaching for IELTS, TOEFL, GRE, PTE, and Duolingo English Test.',
+    anchor: '/services#test-preparation'
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Visa Guidance & Mock Interviews',
+    desc: 'Embassy file curation, financial proof vetting, and 1-on-1 consular interview simulations.',
+    anchor: '/services#visa-guidance'
+  }
+]
 
 export default function Home() {
   const shouldReduceMotion = useReducedMotion()
-  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
+  const [selectedCountry, setSelectedCountry] = useState(null)
+  const [modalOpen, setModalOpen] = useState(false)
 
-  const handleHeroMouseMove = (e) => {
-    if (shouldReduceMotion || window.innerWidth < 1024) return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 20
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 20
-    setMouseOffset({ x, y })
+  // ONLY first 6 countries for Home
+  const topSixCountries = destinations.slice(0, 6)
+
+  const handleOpenCountry = (country) => {
+    setSelectedCountry(country)
+    setModalOpen(true)
   }
 
   return (
     <>
       <SEO
-        title="Study Abroad Consultancy in Secunderabad"
-        description="Start your global education journey with VIC Overseas. Explore study destinations in the USA, UK, Canada, Australia, New Zealand and Europe, with university applications, exam preparation and visa guidance."
+        title="VIC Overseas - Best Guidance for Bright Future | Study Abroad Consultancy"
+        description="Best Guidance for Bright Future. Trusted study abroad consultancy guiding admissions, test prep, and student visas for USA, UK, Canada, Australia, Europe, Dubai, and Singapore."
       />
 
-      {/* Hero Section */}
-      <section
-        onMouseMove={handleHeroMouseMove}
-        className="hero-bg relative overflow-hidden"
-      >
-        {/* Floating Decorative Blurred Gradient Shapes */}
-        <motion.div
-          className="pointer-events-none absolute -top-12 -right-12 h-72 w-72 rounded-full bg-vic-purple/15 blur-3xl"
-          animate={shouldReduceMotion ? {} : { y: [-12, 12, -12] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+      {/* 1. HERO SECTION */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-vic-lilac/70 via-vic-lilac/30 to-white pt-12 pb-20 sm:pt-16 sm:pb-28">
+        {/* Subtle decorative glow shapes */}
+        <div
+          className="pointer-events-none absolute -top-24 right-0 h-96 w-96 rounded-full bg-vic-purple/10 blur-3xl"
           aria-hidden="true"
         />
-        <motion.div
-          className="pointer-events-none absolute -bottom-16 -left-12 h-64 w-64 rounded-full bg-vic-red/10 blur-3xl"
-          animate={shouldReduceMotion ? {} : { y: [12, -12, 12] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-          aria-hidden="true"
-        />
-        <motion.div
-          className="pointer-events-none absolute top-1/2 left-1/3 h-56 w-56 -translate-y-1/2 rounded-full bg-vic-lilac blur-2xl opacity-60"
-          animate={shouldReduceMotion ? {} : { y: [-8, 8, -8] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        <div
+          className="pointer-events-none absolute bottom-0 left-0 h-80 w-80 rounded-full bg-vic-red/5 blur-3xl"
           aria-hidden="true"
         />
 
-        {/* Small Floating Airplane SVG echoing the VIC logo */}
-        <motion.div
-          className="pointer-events-none absolute top-12 right-12 z-20 hidden md:block text-vic-red opacity-85"
-          animate={
-            shouldReduceMotion
-              ? {}
-              : {
-                  x: [0, 30, 8, 0],
-                  y: [0, -16, -4, 0],
-                  rotate: [18, 23, 14, 18]
-                }
-          }
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          aria-hidden="true"
-        >
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z" />
-          </svg>
-        </motion.div>
-
-        <div className="container-shell grid min-h-[620px] items-center gap-10 py-16 lg:grid-cols-[1.03fr_.97fr] lg:py-20">
-          <div className="relative z-10">
-            {/* 1. Badge fades in first */}
-            <motion.span
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: -10 }}
+        <div className="container-shell grid items-center gap-12 lg:grid-cols-12">
+          {/* Hero Left Content */}
+          <div className="lg:col-span-7">
+            <motion.div
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.05 }}
-              className="inline-flex items-center gap-2 rounded-full border border-vic-purple/15 bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[.15em] text-vic-purple"
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 rounded-full border border-vic-purple/20 bg-white/90 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-vic-purple shadow-xs"
             >
-              <Sparkles size={14} /> Your future has no borders
-            </motion.span>
+              <Sparkles size={14} className="text-vic-purple" />
+              <span>Best Guidance for Bright Future</span>
+            </motion.div>
 
-            {/* 2. Headline reveals word-by-word (0.08s stagger), accent arrives last with underline draw */}
-            <h1 className="mt-6 max-w-2xl text-4xl font-black leading-[1.08] tracking-tight text-vic-ink sm:text-5xl lg:text-6xl flex flex-wrap gap-x-3 gap-y-1">
-              {headlineWords.map((word, i) => (
-                <motion.span
-                  key={word}
-                  initial={shouldReduceMotion ? {} : { opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.15 + i * 0.08,
-                    ease: 'easeOut'
-                  }}
-                  className="inline-block"
-                >
-                  {word}
-                </motion.span>
-              ))}
-              <span className="relative inline-block text-vic-purple">
-                <motion.span
-                  initial={shouldReduceMotion ? {} : { opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    duration: 0.4,
-                    delay: 0.15 + headlineWords.length * 0.08,
-                    ease: 'easeOut'
-                  }}
-                >
-                  Starts Here.
-                </motion.span>
-                {/* Soft animated underline draw */}
-                <motion.span
-                  className="absolute -bottom-1.5 left-0 right-0 h-[3px] rounded-full bg-vic-purple"
-                  initial={shouldReduceMotion ? { scaleX: 1 } : { scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{
-                    delay: 0.15 + (headlineWords.length + 1) * 0.08,
-                    duration: 0.55,
-                    ease: [0.16, 1, 0.3, 1]
-                  }}
-                  style={{ transformOrigin: 'left center' }}
-                />
+            <motion.h1
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="mt-5 text-4xl font-black tracking-tight text-vic-ink sm:text-5xl lg:text-6xl leading-[1.1]"
+            >
+              Your Global Education Journey Starts Here
+              <span className="block mt-2.5 text-2xl sm:text-3xl lg:text-4xl font-extrabold text-vic-purple">
+                Best Guidance for Bright Future
               </span>
-            </h1>
+            </motion.h1>
 
-            {/* 3. Subtext reveals next */}
             <motion.p
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.65 }}
-              className="mt-6 max-w-xl text-base leading-8 text-slate-600 sm:text-lg"
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg"
             >
-              Turn your international education dreams into reality with personalised guidance for university selection, applications and your next steps abroad.
+              Expert, transparent guidance for course shortlisting, university applications, test preparation, and student visas across top global destinations including the <strong>USA, UK, Canada, Australia, Europe, Dubai, and Singapore</strong>.
             </motion.p>
 
-            {/* 4. Both CTAs fade in */}
+            {/* Two Action Buttons */}
             <motion.div
-              initial={shouldReduceMotion ? {} : { opacity: 0, y: 12 }}
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-              className="mt-8 flex flex-wrap gap-3"
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="mt-8 flex flex-wrap items-center gap-4"
             >
-              <motion.a
-                className="btn-primary group inline-flex"
+              <a
                 href="#book-counselling"
-                whileHover={shouldReduceMotion ? {} : { scale: 1.03 }}
-                whileTap={shouldReduceMotion ? {} : { scale: 0.97 }}
-                transition={{ duration: 0.15 }}
+                className="btn-primary inline-flex items-center gap-2 py-3.5 px-6 text-base font-bold shadow-lg hover:shadow-xl"
               >
                 <span>Book Free Counselling</span>
-                <ArrowRight
-                  size={17}
-                  className="transition-transform duration-200 group-hover:translate-x-[3px]"
-                />
-              </motion.a>
-              <Link className="btn-outline" to="/countries">
-                Explore Destinations
+                <ArrowRight size={17} />
+              </a>
+
+              <Link
+                to="/destinations"
+                className="btn-outline inline-flex items-center gap-2 py-3.5 px-6 text-base font-bold bg-white/90"
+              >
+                <Globe2 size={18} className="text-vic-purple" />
+                <span>Explore Destinations</span>
               </Link>
             </motion.div>
 
+            {/* Key trust bullets */}
             <motion.div
               initial={shouldReduceMotion ? {} : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.95 }}
-              className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-slate-600"
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs font-semibold text-slate-600"
             >
-              <span className="flex items-center gap-2">
-                <ShieldCheck size={17} className="text-vic-purple" /> Personalised guidance
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={16} className="text-emerald-600" />
+                100% Free Consultation
               </span>
-              <span className="flex items-center gap-2">
-                <Globe2 size={17} className="text-vic-purple" /> Global & European destinations
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={16} className="text-emerald-600" />
+                Direct University Applications
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={16} className="text-emerald-600" />
+                High Visa Approval Track Record
               </span>
             </motion.div>
           </div>
 
-          {/* Hero Image with clip-path/scale reveal and optional desktop mouse-move parallax */}
-          <motion.div
-            initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, scale: 1.05 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              x: mouseOffset.x,
-              y: mouseOffset.y
-            }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
-          >
-            <div className="absolute -inset-5 rounded-[2.5rem] bg-vic-purple/10 blur-2xl" />
-            <img
-              className="relative h-[360px] w-full rounded-[2rem] object-cover shadow-2xl sm:h-[470px]"
-              src="/images/hero-campus.jpg"
-              alt="University students walking across a campus"
-              width="700"
-              height="470"
-              loading="eager"
-              fetchPriority="high"
-            />
-            <div className="absolute -bottom-5 left-4 rounded-2xl bg-white p-4 shadow-soft sm:left-[-24px] sm:p-5">
-              <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-vic-lilac text-vic-purple">
-                  <GraduationCap />
-                </span>
-                <div>
-                  <p className="font-extrabold text-vic-ink">Your next chapter</p>
-                  <p className="text-xs text-slate-500">Starts with a conversation</p>
+          {/* Hero Right Visual Banner */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={shouldReduceMotion ? {} : { opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="relative mx-auto max-w-md lg:max-w-none"
+            >
+              <div className="relative overflow-hidden rounded-3xl bg-slate-900 shadow-2xl border-4 border-white">
+                <img
+                  src="/images/hero-counselling.jpg"
+                  alt="Personalised study abroad counselling and profile evaluation session at VIC Overseas"
+                  width="600"
+                  height="450"
+                  className="h-[360px] sm:h-[420px] w-full object-cover object-top"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-vic-deep/90 via-vic-deep/30 to-transparent" />
+
+                <div className="absolute bottom-6 left-6 right-6 text-white">
+                  <div className="inline-flex items-center gap-2 rounded-full bg-white/20 backdrop-blur-md px-3 py-1 text-xs font-bold text-white mb-2">
+                    <span>USA • UK • Canada • Australia • Europe • Dubai • Singapore</span>
+                  </div>
+                  <h3 className="text-xl font-black">Empowering Dreams Worldwide</h3>
+                  <p className="mt-1 text-xs text-white/80">From profile assessment to campus arrival</p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Infinite Horizontal Marquee Ticker */}
-      <MarqueeTicker />
-
-      {/* Statistics Band */}
-      <section className="border-b border-vic-purple/10 bg-white py-7">
-        <div className="container-shell grid grid-cols-2 gap-6 text-center md:grid-cols-4">
-          {[
-            ['10', 'Study destinations'],
-            ['04', 'Test pathways'],
-            ['1:1', 'Personalised guidance'],
-            ['08', 'Journey milestones']
-          ].map(([n, t]) => (
-            <div key={t}>
-              <p className="text-3xl font-black text-vic-purple">{n}</p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500">{t}</p>
-            </div>
-          ))}
-        </div>
-        <p className="container-shell mt-3 text-center text-[11px] text-slate-400">
-          Counts describe the destinations, exam categories and proposed guidance journey shown on this website; they are not student outcome or achievement claims.
-        </p>
-      </section>
-
-      {/* Services Section with Icon Tilt/Bounce on Hover */}
-      <section className="section-pad">
-        <div className="container-shell">
-          <SectionHeading
-            eyebrow="How we can help"
-            title="Guidance for every step of your journey"
-            text="From choosing a destination to preparing your application, get support to make informed decisions."
-          />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => (
-              <motion.div
-                key={s.title}
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                whileHover={shouldReduceMotion ? {} : { y: -5 }}
-                className="service-card group cursor-pointer"
-              >
-                <motion.span
-                  className="flex h-12 w-12 items-center justify-center rounded-2xl bg-vic-lilac text-vic-purple"
-                  whileHover={shouldReduceMotion ? {} : { scale: 1.15, rotate: 6 }}
-                  transition={{ type: 'spring', stiffness: 350, damping: 15 }}
-                >
-                  <s.icon size={24} strokeWidth={2} />
-                </motion.span>
-                <h3 className="mt-5 text-lg font-extrabold text-vic-ink">{s.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-slate-600">{s.text}</p>
-                <Link to="/services" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-vic-purple group-hover:underline">
-                  Explore service <ArrowRight size={15} className="transition-transform group-hover:translate-x-1" />
-                </Link>
-              </motion.div>
-            ))}
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Countries Section with Card Lift, Image 1.06 Zoom & Arrow Slide on Hover */}
-      <section className="section-pad bg-[#F8F7FC]">
+      {/* 2. SERVICES OVERVIEW (5 ICON CARDS + VIEW ALL) */}
+      <section className="section-pad bg-white">
         <div className="container-shell">
-          <SectionHeading
-            eyebrow="Choose your destination"
-            title="Where would you like to study?"
-            text="Explore popular study destinations across North America, the UK, Europe and Australasia, and discover which one suits your ambitions."
-          />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {countries.map((c, i) => (
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="eyebrow">OUR EXPERTISE</p>
+            <h2 className="section-title">Comprehensive Study Abroad Services</h2>
+            <p className="mt-4 text-slate-600 text-sm sm:text-base">
+              End-to-end guidance designed to simplify each phase of your international application process.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {topServices.map((svc, i) => {
+              const Icon = svc.icon
+              return (
+                <motion.div
+                  key={svc.title}
+                  initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  whileHover={
+                    shouldReduceMotion
+                      ? {}
+                      : {
+                          y: -6,
+                          boxShadow: '0 12px 28px -6px rgba(56, 37, 142, 0.12)'
+                        }
+                  }
+                  className="group flex flex-col justify-between rounded-3xl border border-vic-purple/10 bg-white p-7 shadow-sm transition-all"
+                >
+                  <div>
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-vic-lilac text-vic-purple group-hover:bg-vic-purple group-hover:text-white transition-colors duration-200">
+                      <Icon size={24} />
+                    </div>
+                    <h3 className="mt-5 text-xl font-extrabold text-vic-ink">{svc.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-600">{svc.desc}</p>
+                  </div>
+
+                  <Link
+                    to={svc.anchor}
+                    className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-vic-purple group-hover:translate-x-1 transition-transform"
+                  >
+                    <span>Learn more</span>
+                    <ArrowRight size={15} />
+                  </Link>
+                </motion.div>
+              )
+            })}
+
+            {/* View All Services Card */}
+            <motion.div
+              initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="flex flex-col justify-between rounded-3xl border border-dashed border-vic-purple/30 bg-vic-lilac/40 p-7"
+            >
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-vic-purple">FULL SUPPORT</span>
+                <h3 className="mt-3 text-xl font-extrabold text-vic-ink">Explore All Guidance Areas</h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-600">
+                  Including course selection, university shortlisting, forex card assistance, and post-landing student housing.
+                </p>
+              </div>
+
+              <Link
+                to="/services"
+                className="btn-primary mt-6 inline-flex items-center justify-center gap-2 py-3 px-5 text-sm font-bold"
+              >
+                <span>View All Services</span>
+                <ArrowRight size={16} />
+              </Link>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. TOP DESTINATIONS (FIRST 6 COUNTRIES) */}
+      <section className="section-pad bg-[#F9F8FD]">
+        <div className="container-shell">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <p className="eyebrow">POPULAR DESTINATIONS</p>
+              <h2 className="section-title">Top Countries for Indian Students</h2>
+              <p className="mt-3 max-w-xl text-slate-600 text-sm sm:text-base">
+                Explore premier global education hubs. Click on any country for admissions, top courses, and post-study work rights.
+              </p>
+            </div>
+            <Link
+              to="/destinations"
+              className="btn-outline hidden md:inline-flex items-center gap-2 text-sm font-bold bg-white"
+            >
+              <span>Explore More Destinations</span>
+              <ArrowRight size={16} />
+            </Link>
+          </div>
+
+          {/* 6 Country Cards Grid */}
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {topSixCountries.map((c, i) => (
               <motion.div
                 key={c.slug}
-                initial={shouldReduceMotion ? {} : { opacity: 0, y: 22 }}
+                initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ delay: i * 0.04, duration: 0.45 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
                 whileHover={shouldReduceMotion ? {} : { y: -6 }}
+                className="group flex flex-col overflow-hidden rounded-3xl bg-white border border-vic-purple/10 shadow-sm hover:shadow-md transition-all"
               >
-                <Link to={`/countries/${c.slug}`} className="country-card group block h-full">
-                  <div className="relative h-52 overflow-hidden bg-slate-200">
-                    <div className="absolute inset-0 bg-slate-200 animate-pulse" />
-                    <img
-                      src={c.image}
-                      alt={`${c.name} study destination`}
-                      width="400"
-                      height="208"
-                      loading={i < 3 ? 'eager' : 'lazy'}
-                      fetchPriority={i < 3 ? 'high' : 'auto'}
-                      className="relative z-[1] h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-                    />
-                    <div className="absolute inset-0 z-[2] bg-gradient-to-t from-black/60 to-transparent" />
-                    <span className="absolute bottom-4 left-5 z-[3] text-2xl">{c.flag}</span>
-                    <span className="absolute bottom-4 right-5 z-[3] text-white transition-transform duration-200 group-hover:translate-x-1">
-                      <ChevronRight />
+                {/* Photo banner */}
+                <div className="relative h-48 overflow-hidden bg-slate-200">
+                  <img
+                    src={c.image}
+                    alt={c.name}
+                    width="400"
+                    height="192"
+                    loading={i < 3 ? 'eager' : 'lazy'}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-vic-ink backdrop-blur-sm shadow-xs">
+                    {c.code}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-1 justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-2xl">{c.flag}</span>
+                      <h3 className="text-xl font-extrabold text-vic-ink">{c.name}</h3>
+                    </div>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600 line-clamp-2">
+                      {c.summary}
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                        {c.tuitionRange.split('/')[0]?.trim()} (approx)
+                      </span>
+                      <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                        Bachelors & Masters
+                      </span>
+                      <span className="rounded-lg bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
+                        {c.region}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => handleOpenCountry(c)}
+                      className="inline-flex items-center gap-1.5 text-sm font-bold text-vic-purple group-hover:text-vic-deep group-hover:translate-x-1 transition-all"
+                    >
+                      <span>Learn more</span>
+                      <ArrowRight size={15} />
+                    </button>
+                    <span className="text-xs font-semibold text-slate-400">
+                      {c.region}
                     </span>
                   </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-extrabold text-vic-ink">{c.name}</h3>
-                    <p className="mt-2 text-sm leading-6 text-slate-600">{c.summary}</p>
-                  </div>
-                </Link>
+                </div>
               </motion.div>
             ))}
           </div>
-          <div className="mt-8 text-center">
-            <Link to="/countries" className="btn-outline">
-              View all destinations <ArrowRight size={16} />
+
+          {/* Button leading to Destinations page */}
+          <div className="mt-12 text-center">
+            <Link
+              to="/destinations"
+              className="btn-primary inline-flex items-center gap-2 py-3.5 px-8 text-base font-bold shadow-md hover:shadow-lg"
+            >
+              <span>Explore More Destinations (10+ Countries)</span>
+              <ArrowRight size={17} />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Student Testimonials (consent gated - renders only when consented entries exist) */}
-      <Testimonials />
-
-      {/* Google Reviews */}
-      <GoogleReviews />
-
-      {/* Journey Pathway Section with Scroll Progress Line & Center Card Activation */}
-      <JourneySection />
-
-      {/* Student Stories Dark Band */}
-      <section className="bg-vic-deep py-16 text-white">
-        <div className="container-shell grid items-center gap-8 md:grid-cols-[1fr_auto]">
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[.2em] text-white/60">Student testimonials</p>
-            <h2 className="mt-3 text-3xl font-black">Your review could be next.</h2>
-            <p className="mt-3 max-w-xl leading-7 text-white/70">
-              We are preparing this space for genuine student reviews and testimony. Testimonials will be published here once approved by the students.
+      {/* 4. HOW IT WORKS (5 STEPS) */}
+      <section className="section-pad bg-white">
+        <div className="container-shell">
+          <div className="text-center max-w-2xl mx-auto">
+            <p className="eyebrow">STREAMLINED PROCESS</p>
+            <h2 className="section-title">How It Works</h2>
+            <p className="mt-4 text-slate-600 text-sm sm:text-base">
+              A structured 5-step roadmap engineered to turn your global education ambition into confirmed university admission.
             </p>
           </div>
-          <Link to="/contact" className="btn-light">
-            Talk to our team <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
 
-      {/* Events & Visit Us Grid */}
-      <section className="section-pad">
-        <div className="container-shell grid gap-10 lg:grid-cols-2">
-          <div>
-            <SectionHeading
-              center={false}
-              eyebrow="Events & webinars"
-              title="Learn, ask questions and plan ahead"
-              text="Join a future information session to learn more about destinations, applications and student preparation."
-            />
-            <div className="mt-7 rounded-2xl border border-vic-purple/10 bg-vic-lilac/60 p-6">
-              <div className="flex gap-4">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-vic-purple">
-                  <CalendarDays />
-                </span>
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
+            {homeHowItWorks.map((st, i) => (
+              <motion.div
+                key={st.step}
+                initial={shouldReduceMotion ? {} : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="relative rounded-3xl border border-vic-purple/10 bg-vic-lilac/30 p-6 flex flex-col justify-between"
+              >
                 <div>
-                  <h3 className="font-extrabold text-vic-ink">Upcoming events will be announced</h3>
-                  <p className="mt-1 text-sm leading-6 text-slate-600">
-                    Check back for webinar dates and registration details from VIC Overseas.
+                  <span className="text-3xl font-black text-vic-purple/40">{st.step}</span>
+                  <h3 className="mt-3 text-lg font-extrabold text-vic-ink">{st.title}</h3>
+                  <p className="mt-2 text-xs sm:text-sm leading-relaxed text-slate-600">
+                    {st.description}
                   </p>
-                  <Link to="/contact" className="mt-3 inline-flex items-center gap-2 text-sm font-bold text-vic-purple">
-                    Ask about upcoming sessions <ArrowRight size={15} />
-                  </Link>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <SectionHeading
-              center={false}
-              eyebrow="Visit us"
-              title="Connect with VIC Overseas"
-              text="Start a conversation with our team in Secunderabad, Telangana."
-            />
-            <div className="mt-7 overflow-hidden rounded-2xl bg-slate-100">
-              <div className="flex min-h-[210px] flex-col items-center justify-center bg-[radial-gradient(circle_at_20%_20%,#e8e2ff,transparent_35%),linear-gradient(135deg,#f4f1ff,#e9e6f4)] p-8 text-center">
-                <MapPin className="text-vic-purple" size={34} />
-                <h3 className="mt-3 text-xl font-extrabold text-vic-ink">Secunderabad, Telangana</h3>
-                <p className="mt-1 text-sm text-slate-600">India</p>
-                <p className="mt-3 max-w-sm text-xs text-slate-500">
-                  Please contact us for the exact office address and directions.
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-5">
-                <a
-                  href={`tel:${social.phoneTel}`}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-vic-purple hover:underline"
-                >
-                  <Phone size={16} /> {social.phoneDisplay}
-                </a>
-                <Link to="/contact" className="text-sm font-bold text-vic-purple">
-                  Contact us <ArrowRight size={15} className="inline" />
-                </Link>
-              </div>
-            </div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Counselling Enquiry Form Section with Slide-In */}
-      <section id="book-counselling" className="section-pad scroll-mt-24 bg-[#F8F7FC] overflow-hidden">
-        <div className="container-shell grid items-start gap-10 lg:grid-cols-[.8fr_1.2fr]">
-          <motion.div
-            initial={shouldReduceMotion ? {} : { opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="pt-3"
-          >
-            <p className="eyebrow">Let’s plan your next step</p>
-            <h2 className="section-title">Book your free counselling session.</h2>
-            <p className="mt-5 leading-8 text-slate-600">
-              Tell us a little about your study plans. The VIC Overseas team can help you understand possible next steps for your international education journey.
+      {/* 5. GOOGLE REVIEWS / SUCCESS STORIES */}
+      <section id="reviews" className="section-pad scroll-mt-24 bg-[#F9F8FD]">
+        <div className="container-shell">
+          <GoogleReviews />
+        </div>
+      </section>
+
+      {/* 6. FAQ ACCORDION */}
+      <section className="section-pad bg-white">
+        <div className="container-shell">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <p className="eyebrow">COMMON QUESTIONS</p>
+            <h2 className="section-title">Frequently Asked Questions</h2>
+            <p className="mt-3 text-slate-600 text-sm sm:text-base">
+              Clear answers regarding fees, eligibility, intakes, and student visas.
             </p>
-            <div className="mt-8 grid gap-4 text-sm font-semibold text-slate-700">
-              <a
-                href={`tel:${social.phoneTel}`}
-                className="flex items-center gap-3 transition hover:text-vic-purple"
-              >
-                <Phone className="text-vic-purple" size={18} /> {social.phoneDisplay}
-              </a>
-              <a
-                href="mailto:apply@vicoverseas.com"
-                className="flex items-center gap-3 transition hover:text-vic-purple"
-              >
-                <Mail className="text-vic-purple" size={18} /> apply@vicoverseas.com
-              </a>
-              <a
-                href={social.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 transition hover:text-vic-purple"
-              >
-                <Globe2 className="text-vic-purple" size={18} /> vicoverseas.com
-              </a>
-              <span className="flex items-center gap-3">
-                <MapPin className="text-vic-purple" size={18} /> Secunderabad, Telangana
-              </span>
+          </div>
+
+          <FAQAccordion items={homeFaqs} />
+        </div>
+      </section>
+
+      {/* 7. FINAL CTA BANNER & COUNSELLING FORM */}
+      <section id="book-counselling" className="section-pad scroll-mt-24 bg-gradient-to-b from-[#F9F8FD] to-white border-t border-vic-purple/10">
+        <div className="container-shell grid items-start gap-12 lg:grid-cols-[.9fr_1.1fr]">
+          {/* Left Column: Reassuring Copy */}
+          <div className="pt-2">
+            <span className="inline-flex items-center gap-2 rounded-full bg-vic-lilac px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-vic-purple">
+              START YOUR APPLICATION
+            </span>
+            <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-vic-ink">
+              Ready to start? Talk to a counsellor today.
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-slate-600">
+              Share your details for a 1-on-1 profile evaluation. Our senior advisors will help you evaluate universities, entry prerequisites, and post-study opportunities.
+            </p>
+
+            <div className="mt-8 space-y-3">
+              <div className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <CheckCircle2 size={18} className="text-vic-purple shrink-0" />
+                <span>Zero service charges for initial profile evaluation</span>
+              </div>
+              <div className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <CheckCircle2 size={18} className="text-vic-purple shrink-0" />
+                <span>Enquiries delivered directly to <strong className="text-vic-purple font-bold">apply@vicoverseas.com</strong></span>
+              </div>
+              <div className="flex items-center gap-3 text-sm font-semibold text-slate-700">
+                <CheckCircle2 size={18} className="text-vic-purple shrink-0" />
+                <span>In-person sessions in Secunderabad or virtual Zoom counselling</span>
+              </div>
             </div>
 
-            <div className="mt-8">
+            {/* Instant WhatsApp alternative */}
+            <div className="mt-8 rounded-3xl bg-white p-6 border border-vic-purple/10 shadow-sm">
+              <h4 className="font-extrabold text-vic-ink text-base">Prefer an immediate chat?</h4>
+              <p className="mt-1 text-xs text-slate-600">
+                Connect directly with our study abroad helpdesk on WhatsApp for instant guidance.
+              </p>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Chat on WhatsApp instead"
-                className="inline-flex items-center gap-2.5 rounded-full border-2 border-[#25D366] bg-white px-5 py-3 text-xs font-extrabold text-slate-800 shadow-sm transition hover:bg-[#25D366] hover:text-white focus:outline-none focus:ring-2 focus:ring-[#25D366]"
+                className="btn-outline mt-4 inline-flex items-center gap-2 border-[#25D366] text-[#25D366] hover:bg-[#25D366] hover:text-white font-bold py-2.5 px-4 text-sm transition"
               >
-                <FaWhatsapp size={19} className="text-[#25D366] group-hover:text-white" />
-                Chat on WhatsApp instead
+                <FaWhatsapp size={18} />
+                <span>Chat on WhatsApp (+91 91085 60255)</span>
               </a>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={shouldReduceMotion ? {} : { opacity: 0, x: 28 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
+          {/* Right Column: LeadForm */}
+          <div>
             <LeadForm />
-          </motion.div>
+          </div>
         </div>
       </section>
+
+      {/* 8. COMPACT VISIT OUR OFFICE STRIP */}
+      <section className="bg-vic-lilac/70 border-t border-vic-purple/15 py-6">
+        <div className="container-shell flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5 text-center sm:text-left">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-vic-purple shadow-xs">
+              <MapPin size={22} />
+            </div>
+            <div>
+              <span className="text-[11px] font-black uppercase tracking-wider text-vic-purple block">
+                VISIT OUR OFFICE
+              </span>
+              <p className="text-sm font-bold text-vic-ink">
+                Area: {officeContact.displayAddress}
+              </p>
+            </div>
+          </div>
+
+          <a
+            href={officeContact.mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline inline-flex items-center gap-2 py-2.5 px-5 text-xs font-black uppercase tracking-wider border-vic-purple/30 text-vic-purple hover:bg-white transition"
+          >
+            <span>GET DIRECTIONS</span>
+            <ArrowRight size={14} />
+          </a>
+        </div>
+      </section>
+
+      {/* Country Detail Modal */}
+      <CountryModal
+        country={selectedCountry}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+      />
     </>
   )
 }

@@ -270,7 +270,7 @@ export function CountryDetail() {
             ))}
           </StaggerGroup>
           <p className="mt-7 text-sm leading-7 text-slate-500">
-            Admission criteria, language requirements, tuition fees, scholarships and visa rules vary by institution and may change. Confirm current requirements with the relevant official sources.
+            Admission criteria, language requirements, and visa rules vary by institution and may change. Confirm current requirements with the relevant official sources.
           </p>
         </Reveal>
 
