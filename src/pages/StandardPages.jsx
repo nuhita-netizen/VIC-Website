@@ -576,6 +576,28 @@ export function Scholarships() {
             </motion.div>
           </StaggerItem>
         </StaggerGroup>
+
+        {/* Video Guide */}
+        <div className="mt-12 rounded-3xl bg-vic-lilac/30 p-8 border border-vic-purple/15 text-center">
+          <p className="eyebrow">FEATURED VIDEO</p>
+          <h3 className="mt-1 text-2xl font-black text-vic-ink">Scholarship & Funding Guidance</h3>
+          <p className="mt-2 text-sm text-slate-600 max-w-lg mx-auto">
+            Learn how international applicants secure tuition waivers, merit awards, and university bursaries.
+          </p>
+          <div className="mt-6 mx-auto w-full max-w-[340px] rounded-3xl bg-white p-3 shadow-xl border border-vic-purple/15">
+            <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 shadow-inner">
+              <video
+                src="/videos/vic_overseas_education.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
       </section>
       <CTA />
     </>

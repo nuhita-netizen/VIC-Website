@@ -177,6 +177,27 @@ export default function Services() {
                           onExamChange={(val) => setSelectedExam(val)}
                         />
                       </div>
+                    ) : sec.id === 'scholarships-funding' ? (
+                      /* Scholarship Video Card */
+                      <div className="flex flex-col items-center">
+                        <div className="w-full max-w-[340px] rounded-3xl bg-white p-3 shadow-xl border border-vic-purple/15">
+                          <div className="relative aspect-[9/16] w-full rounded-2xl overflow-hidden bg-slate-950 shadow-inner">
+                            <video
+                              src="/videos/vic_overseas_education.mp4"
+                              controls
+                              playsInline
+                              preload="metadata"
+                              className="h-full w-full object-cover"
+                            >
+                              Your browser does not support the video tag.
+                            </video>
+                          </div>
+                          <div className="mt-3 px-2 pb-1">
+                            <p className="text-xs font-extrabold text-vic-ink">VIC Overseas Guidance</p>
+                            <p className="text-[11px] text-slate-500">Video Guide • Scholarship & Study Abroad</p>
+                          </div>
+                        </div>
+                      </div>
                     ) : (
                       <motion.div
                         whileHover={shouldReduceMotion ? {} : { y: -4 }}
